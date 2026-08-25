@@ -19,7 +19,7 @@ export default defineConfig({
 		webExtension({
 			manifest: './manifest.json',
 			browser: 'chrome',
-			additionalInputs: ['src/scripts/block.ts', 'src/assets/css/block.css'],
+			additionalInputs: ['src/scripts/block.ts'],
 		}),
 	],
 	resolve: {

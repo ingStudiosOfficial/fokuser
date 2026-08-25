@@ -1,9 +1,20 @@
 function blockPage() {
 	console.log('Block page called.');
 
-	const blockedHtml = `
+	window.stop();
+
+	document.querySelectorAll('style, link[rel="stylesheet"]').forEach((el) => el.remove());
+	document.querySelectorAll('*[style]').forEach((el) => el.removeAttribute('style'));
+
+	const blockedHtmlHead = `
+	<title>${document.title} (Blocked)</title>
+`;
+
+	const blockedHtmlBody = `
 <div class="blocked">
-	<h1>Page blocked by Fokuser</h1>
+	<h1>^_^</h1>
+	<h1>Time to focus buddy!</h1>
+	<p>Page blocked by Fokuser</p>
 </div>
 
 <style>
@@ -15,6 +26,13 @@ body {
 	font-family: system-ui;
 	width: 100vw;
 	height: 100vh;
+	padding: 0;
+	margin: 0;
+}
+
+h1, p {
+	margin: 0;
+	font-weight: normal;
 }
 
 .blocked {
@@ -25,11 +43,22 @@ body {
 	text-align: center;
 	width: 100%;
 	height: 100%;
+	gap: 16px;
 }
 </style>
 `;
 
-	document.body.innerHTML = blockedHtml;
+	document.documentElement.innerHTML = `
+<!DOCTYPE html>
+<html>
+	<head>${blockedHtmlHead}</head>
+	<body>${blockedHtmlBody}<body>
+</html>
+`;
 }
 
-blockPage();
+async function main() {
+	blockPage();
+}
+
+main();

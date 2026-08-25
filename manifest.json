@@ -11,7 +11,7 @@
 	"side_panel": {
 		"default_path": "index.html"
 	},
-	"permissions": ["sidePanel", "activeTab", "scripting"],
+	"permissions": ["sidePanel", "activeTab", "scripting", "alarms"],
 	"action": {
 		"default_title": "Fokuser dashboard"
 	},
@@ -22,8 +22,7 @@
 		{
 			"matches": ["<all_urls>"],
 			"js": ["src/scripts/block.ts"],
-			"css": ["src/assets/css/block.css"],
-			"run_at": "document_end"
+			"run_at": "document_start"
 		}
 	]
 }
