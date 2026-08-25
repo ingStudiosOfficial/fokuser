@@ -1,11 +1,30 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import FocusSection from './components/FocusSection.vue';
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+	<div class="sidebar-root">
+		<div class="sidebar-app">
+			<FocusSection></FocusSection>
+		</div>
+	</div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.sidebar-root {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+}
+
+.sidebar-app {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	gap: 16px;
+	padding: 16px 8px;
+	flex-grow: 1;
+}
+</style>

@@ -23,4 +23,12 @@ export default defineConfigWithVueTs(
   ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
 
   skipFormatting,
+
+  {
+	name: "app/custom-vue-rules",
+	files: ["**/*.vue"],
+	rules: {
+		"vue/no-deprecated-slot-attribute": "off",
+	},
+},
 )

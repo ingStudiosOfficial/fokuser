@@ -1,0 +1,12 @@
+@import url('./base.css');
+
+@font-face {
+	font-family: 'Google Sans Flex';
+	src: url('../fonts/google_sans_flex.ttf');
+}
+
+body {
+	padding: 0;
+	margin: 0;
+	font-family: 'Google Sans Flex';
+}

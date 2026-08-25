@@ -1,0 +1,29 @@
+{
+	"manifest_version": 3,
+	"name": "Fokuser",
+	"version": "0.0.1",
+	"description": "Site blocker and focus timer with an all-in-one tracking dashboard.",
+	"icons": {
+		"16": "icons/logo16.png",
+		"48": "icons/logo48.png",
+		"128": "icons/logo128.png"
+	},
+	"side_panel": {
+		"default_path": "index.html"
+	},
+	"permissions": ["sidePanel", "activeTab", "scripting"],
+	"action": {
+		"default_title": "Fokuser dashboard"
+	},
+	"background": {
+		"service_worker": "src/worker.ts"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["src/scripts/block.ts"],
+			"css": ["src/assets/css/block.css"],
+			"run_at": "document_end"
+		}
+	]
+}
