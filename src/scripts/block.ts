@@ -1,3 +1,11 @@
+import { getFocusMode } from './focus';
+
+chrome.runtime.onMessage.addListener((message) => {
+	if (message === 'unblock-focus') {
+		window.location.reload();
+	}
+});
+
 function blockPage() {
 	console.log('Block page called.');
 
@@ -58,7 +66,11 @@ h1, p {
 }
 
 async function main() {
-	blockPage();
+	const focusMode = await getFocusMode();
+	console.log('Focus mode:', focusMode);
+	if (focusMode) {
+		blockPage();
+	}
 }
 
 main();

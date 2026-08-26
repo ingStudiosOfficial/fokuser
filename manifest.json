@@ -11,7 +11,7 @@
 	"side_panel": {
 		"default_path": "index.html"
 	},
-	"permissions": ["sidePanel", "activeTab", "scripting", "alarms"],
+	"permissions": ["sidePanel", "activeTab", "scripting", "alarms", "storage", "tabs"],
 	"action": {
 		"default_title": "Fokuser dashboard"
 	},
