@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import FocusSection from './components/FocusSection.vue';
+import FocusSection from '@/components/FocusSection.vue';
+import EndFocusDialog from '@/components/dialogs/EndFocusDialog.vue';
 </script>
 
 <template>
@@ -7,6 +8,7 @@ import FocusSection from './components/FocusSection.vue';
 		<div class="sidebar-app">
 			<FocusSection></FocusSection>
 		</div>
+		<EndFocusDialog></EndFocusDialog>
 	</div>
 </template>
 

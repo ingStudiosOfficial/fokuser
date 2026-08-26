@@ -2,11 +2,12 @@
 import '@m3e/web/heading';
 import '@m3e/web/form-field';
 import '@m3e/web/timepicker';
-import '@m3e/web/icon-button';
+import '@m3e/web/button';
 import '@m3e/web/icon';
 import type { M3eTimepickerElement } from '@m3e/web/timepicker';
-import { getFocusTime, setFocusMode } from '@/scripts/focus';
+import { getFocusTime, setFocusTime } from '@/utils/focus';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
+import { useDialog } from '@/composables/dialog';
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message === 'unblock-focus') {
@@ -15,6 +16,8 @@ chrome.runtime.onMessage.addListener((message) => {
 		if (timer) clearInterval(timer);
 	}
 });
+
+const { focusDialog } = useDialog();
 
 const focusTiming = ref<number | undefined>(0);
 const countdownLeft = ref<number | null>(null);
@@ -32,7 +35,7 @@ function onTimepickerChange(el: M3eTimepickerElement) {
 	console.log(el.date);
 	const date = el.date?.getTime() || Date.now();
 	focusTiming.value = date;
-	setFocusMode(date);
+	setFocusTime(date);
 }
 
 function getTimeTill(ms: number): string {
@@ -90,7 +93,8 @@ watch(focusTiming, (time) => {
 		<m3e-heading style="color: var(--md-sys-color-primary)" variant="display" size="large">{{
 			getTimeTill(countdownLeft)
 		}}</m3e-heading>
-		<m3e-heading variant="title" size="large">of focus left</m3e-heading>
+		<m3e-heading variant="title" size="large">of fokus left</m3e-heading>
+		<m3e-button variant="text" @click="focusDialog?.show()">End fokus</m3e-button>
 	</div>
 	<div v-else class="focus-section">
 		<m3e-heading variant="title" size="large">Start Fokus Session</m3e-heading>
