@@ -1,10 +1,16 @@
 export async function setFocusMode(blockTime: number) {
-	chrome.alarms.create('focus-alarm', { when: blockTime, persistAcrossSessions: true });
+	console.log('Block time:', blockTime);
 
-	await chrome.storage.local.set({ isFocusMode: true });
+	await chrome.alarms.create('focus-alarm', { when: blockTime, persistAcrossSessions: true });
+	await chrome.storage.local.set({ focusTime: blockTime });
+
+	const tabs = await chrome.tabs.query({});
+	for (const tab of tabs) {
+		if (tab.id) await chrome.tabs.sendMessage(tab.id, 'block-focus');
+	}
 }
 
-export async function getFocusMode(): Promise<boolean> {
-	const { isFocusMode } = await chrome.storage.local.get('isFocusMode');
-	return isFocusMode;
+export async function getFocusTime(): Promise<number | undefined> {
+	const { focusTime } = await chrome.storage.local.get('focusTime');
+	return focusTime;
 }

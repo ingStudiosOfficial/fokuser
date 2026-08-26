@@ -1,18 +1,24 @@
-import { getFocusMode } from './focus';
+import { getFocusTime } from './focus';
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message === 'unblock-focus') {
 		window.location.reload();
+	} else if (message === 'block-focus') {
+		checkFocus();
 	}
 });
 
-function blockPage() {
+function blockPage(blockTime: number) {
 	console.log('Block page called.');
 
 	window.stop();
 
 	document.querySelectorAll('style, link[rel="stylesheet"]').forEach((el) => el.remove());
 	document.querySelectorAll('*[style]').forEach((el) => el.removeAttribute('style'));
+
+	const timeObject = new Date(blockTime);
+	const hour = String(timeObject.getHours()).padStart(2, '0');
+	const minute = String(timeObject.getMinutes()).padStart(2, '0');
 
 	const blockedHtmlHead = `
 	<title>${document.title} (Blocked)</title>
@@ -22,6 +28,7 @@ function blockPage() {
 <div class="blocked">
 	<h1>^_^</h1>
 	<h1>Time to focus buddy!</h1>
+	<p id="block-time">Focus until ${hour}:${minute} to earn points!</p>
 	<p>Page blocked by Fokuser</p>
 </div>
 
@@ -65,12 +72,12 @@ h1, p {
 `;
 }
 
-async function main() {
-	const focusMode = await getFocusMode();
-	console.log('Focus mode:', focusMode);
-	if (focusMode) {
-		blockPage();
+async function checkFocus() {
+	const focusTime = await getFocusTime();
+	console.log('Focus time:', focusTime);
+	if (focusTime) {
+		blockPage(focusTime);
 	}
 }
 
-main();
+checkFocus();
