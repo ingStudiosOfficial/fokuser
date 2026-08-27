@@ -11,18 +11,22 @@ import { useDialog } from '@/composables/dialog';
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message === 'unblock-focus') {
-		focusTiming.value = undefined;
-		countdownLeft.value = null;
-		if (timer) clearInterval(timer);
+		endFocus();
 	}
 });
 
-const { focusDialog } = useDialog();
+const { focusDialog, onFocusEnd } = useDialog();
 
 const focusTiming = ref<number | undefined>(0);
 const countdownLeft = ref<number | null>(null);
 
 let timer: number | null = null;
+
+function endFocus() {
+	focusTiming.value = undefined;
+	countdownLeft.value = null;
+	clearTimer();
+}
 
 function clearTimer() {
 	if (timer) {
@@ -70,10 +74,12 @@ function updateCountdown() {
 onMounted(async () => {
 	const ft = await getFocusTime();
 	focusTiming.value = ft;
+	onFocusEnd.value = endFocus;
 });
 
 onUnmounted(() => {
 	clearTimer();
+	onFocusEnd.value = null;
 });
 
 watch(focusTiming, (time) => {

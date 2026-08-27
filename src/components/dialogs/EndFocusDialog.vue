@@ -6,13 +6,14 @@ import { onMounted, useTemplateRef } from 'vue';
 import '@m3e/web/button';
 import { endFocus } from '@/utils/focus';
 
-const { focusDialog } = useDialog();
+const { focusDialog, onFocusEnd } = useDialog();
 
 const dialog = useTemplateRef<M3eDialogElement>('dialog');
 
 async function endFocusSession() {
 	console.log('Ending focus session.');
 	await endFocus();
+	if (onFocusEnd.value) onFocusEnd.value();
 	await dialog.value?.hide();
 }
 
