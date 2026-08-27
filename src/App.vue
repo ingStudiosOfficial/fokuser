@@ -4,8 +4,8 @@ import EndFocusDialog from '@/components/dialogs/EndFocusDialog.vue';
 </script>
 
 <template>
-	<div class="sidebar-root">
-		<div class="sidebar-app">
+	<div class="popup-root">
+		<div class="popup-app">
 			<FocusSection></FocusSection>
 		</div>
 		<EndFocusDialog></EndFocusDialog>
@@ -13,13 +13,13 @@ import EndFocusDialog from '@/components/dialogs/EndFocusDialog.vue';
 </template>
 
 <style scoped>
-.sidebar-root {
+.popup-root {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
 }
 
-.sidebar-app {
+.popup-app {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
