@@ -25,7 +25,11 @@ async function checkSiteWhitelisted(): Promise<boolean> {
 			const whitelistedUrl = new URL(url);
 			console.log('Whitelisted URL hostname:', whitelistedUrl.hostname);
 
-			if (whitelistedUrl.hostname === currentUrl.hostname.replace(/^www\./, '')) return true;
+			if (
+				whitelistedUrl.hostname.replace(/^www\./, '') ===
+				currentUrl.hostname.replace(/^www\./, '')
+			)
+				return true;
 		}
 
 		return false;

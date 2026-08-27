@@ -8,7 +8,7 @@
 		"48": "icons/logo48.png",
 		"128": "icons/logo128.png"
 	},
-	"permissions": ["sidePanel", "activeTab", "scripting", "alarms", "storage", "tabs"],
+	"permissions": ["sidePanel", "scripting", "alarms", "storage", "tabs"],
 	"action": {
 		"default_title": "Fokuser dashboard",
 		"default_popup": "index.html"
