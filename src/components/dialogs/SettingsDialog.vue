@@ -7,14 +7,22 @@ import '@m3e/web/form-field';
 import '@m3e/web/textarea-autosize';
 import '@m3e/web/button';
 import '@m3e/web/icon';
+import { setWhitelistedSites } from '@/utils/sites';
 
 const { settingsDialog } = useDialog();
 
 const dialog = useTemplateRef<M3eDialogElement>('dialog');
 
-function parseWhitelisted(target: HTMLTextAreaElement) {
+async function parseWhitelisted(target: HTMLTextAreaElement) {
 	const sites = target.value.split('\n');
 	console.log('Whitelisted sites:', sites);
+
+	const prefixedSites = sites.map((s) => {
+		const url = /^https?:\/\//i.test(s) ? s : `http://${s}`;
+		return url;
+	});
+
+	await setWhitelistedSites(prefixedSites);
 }
 
 onMounted(() => {
@@ -39,7 +47,6 @@ onMounted(() => {
 				<textarea
 					id="whitelist-fld"
 					@change="parseWhitelisted($event.target as HTMLTextAreaElement)"
-					@keydown.enter="parseWhitelisted($event.target as HTMLTextAreaElement)"
 				></textarea>
 			</m3e-form-field>
 			<m3e-textarea-autosize for="whitelist-fld"></m3e-textarea-autosize>
