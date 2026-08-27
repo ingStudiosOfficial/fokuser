@@ -25,10 +25,12 @@ onMounted(() => {
 <template>
 	<m3e-dialog ref="dialog">
 		<span slot="header">End fokus session</span>
-		<span
-			>Are you sure you want to end your current focus session? You will lose all points
-			accumulated from this session.</span
-		>
+		<div class="content">
+			<span
+				>Are you sure you want to end your current focus session? You will lose all points
+				accumulated from this session.</span
+			>
+		</div>
 		<div slot="actions" end>
 			<m3e-button variant="text" @click="endFocusSession()">Yes</m3e-button>
 			<m3e-button variant="filled">
@@ -37,3 +39,11 @@ onMounted(() => {
 		</div>
 	</m3e-dialog>
 </template>
+
+<style scoped>
+.content {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+</style>

@@ -51,11 +51,11 @@ function getTimeTill(ms: number): string {
 	const seconds = totalSeconds % 60;
 
 	if (hours > 0) {
-		return `${hours} hours, ${minutes} minutes, and ${seconds} seconds`;
+		return `${hours}h ${minutes}m ${seconds}s`;
 	} else if (minutes > 0) {
-		return `${minutes} minutes and ${seconds} seconds`;
+		return `${minutes}m ${seconds}s`;
 	} else {
-		return `${seconds} seconds`;
+		return `${seconds}s`;
 	}
 }
 

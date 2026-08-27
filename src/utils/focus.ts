@@ -6,7 +6,11 @@ export async function setFocusTime(blockTime: number) {
 
 	const tabs = await chrome.tabs.query({});
 	for (const tab of tabs) {
-		if (tab.id) await chrome.tabs.sendMessage(tab.id, 'block-focus');
+		try {
+			if (tab.id) await chrome.tabs.sendMessage(tab.id, 'block-focus');
+		} catch (error) {
+			console.error(error);
+		}
 	}
 }
 
