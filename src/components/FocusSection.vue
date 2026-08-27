@@ -5,7 +5,7 @@ import '@m3e/web/timepicker';
 import '@m3e/web/button';
 import '@m3e/web/icon';
 import type { M3eTimepickerElement } from '@m3e/web/timepicker';
-import { getFocusTime, setFocusTime } from '@/utils/focus';
+import { getFocusTime, setFocusTime, getTimeTill } from '@/utils/focus';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useDialog } from '@/composables/dialog';
 
@@ -40,23 +40,6 @@ function onTimepickerChange(el: M3eTimepickerElement) {
 	const date = el.date?.getTime() || Date.now();
 	focusTiming.value = date;
 	setFocusTime(date);
-}
-
-function getTimeTill(ms: number): string {
-	if (ms <= 0) return '0 seconds';
-
-	const totalSeconds = Math.floor(ms / 1000);
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = totalSeconds % 60;
-
-	if (hours > 0) {
-		return `${hours}h ${minutes}m ${seconds}s`;
-	} else if (minutes > 0) {
-		return `${minutes}m ${seconds}s`;
-	} else {
-		return `${seconds}s`;
-	}
 }
 
 function updateCountdown() {
