@@ -143,7 +143,7 @@ watch(
 					@change="parseBlacklisted($event.target as HTMLTextAreaElement)"
 				></textarea>
 			</m3e-form-field>
-			<m3e-textarea-autosize for="whitelist-fld"></m3e-textarea-autosize>
+			<m3e-textarea-autosize for="blacklist-fld"></m3e-textarea-autosize>
 		</div>
 	</m3e-dialog>
 </template>

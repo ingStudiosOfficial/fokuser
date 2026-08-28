@@ -4,6 +4,7 @@ import '@m3e/web/form-field';
 import '@m3e/web/timepicker';
 import '@m3e/web/button';
 import '@m3e/web/icon';
+import '@m3e/web/progress-indicator';
 import type { M3eTimepickerElement } from '@m3e/web/timepicker';
 import { getFocusTime, setFocusTime } from '@/utils/focus';
 import { timeToString } from '@/utils/time';
@@ -43,6 +44,7 @@ function onTimepickerChange(el: M3eTimepickerElement) {
 	console.log(el.date);
 	const date = el.date?.getTime() || Date.now();
 	focusTiming.value = date;
+	completedFocusTime.value = date - Date.now();
 	setFocusTime(date);
 }
 
@@ -64,16 +66,26 @@ onMounted(async () => {
 });
 
 onUnmounted(() => {
-	clearTimer();
+	if (timer) {
+		clearInterval(timer);
+		timer = null;
+	}
+
 	onFocusEnd.value = null;
 });
 
-watch(focusTiming, (time) => {
+watch(focusTiming, async (time) => {
 	clearTimer();
 
 	if (time && time > Date.now()) {
+		if (!completedFocusTime.value) {
+			const ft = await getFocusTime();
+			const duration = (ft?.blockTime || time) - (ft?.startTime || Date.now());
+			completedFocusTime.value = duration > 0 ? duration : time - Date.now();
+		}
+
 		updateCountdown();
-		timer = setInterval(updateCountdown, 1000);
+		timer = setInterval(updateCountdown, 50);
 	} else {
 		countdownLeft.value = null;
 		completedFocusTime.value = null;
@@ -82,10 +94,21 @@ watch(focusTiming, (time) => {
 </script>
 
 <template>
-	<div v-if="countdownLeft" class="focus-section-running">
-		<m3e-heading style="color: var(--md-sys-color-primary)" variant="display" size="large">{{
-			timeToString(countdownLeft)
-		}}</m3e-heading>
+	<div v-if="countdownLeft && completedFocusTime" class="focus-section-running">
+		<m3e-circular-progress-indicator
+			:value="((completedFocusTime - countdownLeft) / completedFocusTime) * 100"
+			variant="flat"
+			style="--m3e-circular-flat-progress-indicator-diameter: 50vw"
+		>
+			<div class="timer-content">
+				<m3e-heading
+					style="color: var(--md-sys-color-primary)"
+					variant="display"
+					size="medium"
+					>{{ timeToString(countdownLeft) }}</m3e-heading
+				>
+			</div>
+		</m3e-circular-progress-indicator>
 		<m3e-heading variant="title" size="large">of fokus left</m3e-heading>
 		<m3e-button variant="text" @click="focusDialog?.show()">End fokus</m3e-button>
 	</div>
@@ -119,5 +142,14 @@ watch(focusTiming, (time) => {
 	align-items: center;
 	justify-content: center;
 	gap: 16px;
+}
+
+.timer-content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	max-width: 45vw;
 }
 </style>

@@ -39,7 +39,7 @@ export const useSettings = defineStore('settings', () => {
 		if (site === '') return;
 		const url = /^https?:\/\//i.test(site) ? site : `http://${site}`;
 		blacklisted.value.push(url);
-		await setBlacklistedSites(toRaw(whitelisted.value));
+		await setBlacklistedSites(toRaw(blacklisted.value));
 	}
 
 	async function loadSettings() {
