@@ -8,6 +8,8 @@ export async function setFocusTime(blockTime: number) {
 		focusTime: { blockTime: blockTime, startTime: Date.now() } as FocusData,
 	});
 
+	await chrome.runtime.sendMessage('block-focus');
+
 	const tabs = await chrome.tabs.query({});
 	for (const tab of tabs) {
 		try {
