@@ -1,0 +1,46 @@
+name: Package Chrome Extension
+
+on:
+    push:
+        tags:
+            - 'v*'
+    workflow_dispatch:
+
+jobs:
+    build-extension:
+        name: Build Chrome Extension
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+        steps:
+            - name: Checkout source code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+
+            - run: npm run build
+
+            - name: Compress to zip
+              id: packExtensionDir
+              uses: cardinalby/webext-buildtools-pack-extension-dir-action@v1
+              with:
+                  extensionDir: 'dist'
+                  zipFilePath: 'build/extension.zip'
+
+            - name: Build crx file
+              uses: cardinalby/webext-buildtools-chrome-crx-action@v2
+              with:
+                  zipFilePath: 'build/extension.zip'
+                  crxFilePath: 'build/extension.crx'
+                  privateKey: ${{ secrets.PEM_KEY }}
+
+            - name: Upload crx to release
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                  files: |
+                      build/extension.zip
+                      build/extension.crx

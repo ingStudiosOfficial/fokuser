@@ -37,3 +37,7 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Chrome Extension secrets
+*.pem
+*.pem.pub
