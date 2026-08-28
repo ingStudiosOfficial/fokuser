@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Fokuser",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Site blocker and focus timer with an all-in-one tracking dashboard.",
 	"icons": {
 		"16": "icons/logo16.png",
