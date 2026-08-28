@@ -39,6 +39,13 @@ jobs:
                   crxFilePath: 'build/extension.crx'
                   privateKey: ${{ secrets.PEM_KEY }}
 
+            - name: Parse version
+              id: version_parser
+              run: |
+                  TAG=${{ github.ref_name }}
+                  CLEAN_VERSION=${TAG#v}
+                  echo "clean=$CLEAN_VERSION" >> $GITHUB_OUTPUT
+
             - name: Upload crx to release
               uses: softprops/action-gh-release@v2
               if: startsWith(github.ref, 'refs/tags/')
