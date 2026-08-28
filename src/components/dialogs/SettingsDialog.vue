@@ -120,6 +120,8 @@ watch(
 				<textarea
 					id="whitelist-fld"
 					v-model="whitelistedSitesText"
+					autocorrect="false"
+					spellcheck="false"
 					@change="parseWhitelisted($event.target as HTMLTextAreaElement)"
 				></textarea>
 			</m3e-form-field>
@@ -140,6 +142,8 @@ watch(
 				<textarea
 					id="blacklist-fld"
 					v-model="blacklistedSitesText"
+					autocorrect="false"
+					spellcheck="false"
 					@change="parseBlacklisted($event.target as HTMLTextAreaElement)"
 				></textarea>
 			</m3e-form-field>
