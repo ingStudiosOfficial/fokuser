@@ -5,9 +5,11 @@ import '@m3e/web/timepicker';
 import '@m3e/web/button';
 import '@m3e/web/icon';
 import type { M3eTimepickerElement } from '@m3e/web/timepicker';
-import { getFocusTime, setFocusTime, getTimeTill } from '@/utils/focus';
+import { getFocusTime, setFocusTime } from '@/utils/focus';
+import { timeToString } from '@/utils/time';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useDialog } from '@/composables/dialog';
+import TimeFocusedSection from './TimeFocusedSection.vue';
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message === 'unblock-focus') {
@@ -17,14 +19,16 @@ chrome.runtime.onMessage.addListener((message) => {
 
 const { focusDialog, onFocusEnd } = useDialog();
 
-const focusTiming = ref<number | undefined>(0);
+const focusTiming = ref<number | null>(0);
 const countdownLeft = ref<number | null>(null);
+const completedFocusTime = ref<number | null>(null);
 
 let timer: number | null = null;
 
 function endFocus() {
-	focusTiming.value = undefined;
+	focusTiming.value = null;
 	countdownLeft.value = null;
+	completedFocusTime.value = null;
 	clearTimer();
 }
 
@@ -47,8 +51,7 @@ function updateCountdown() {
 
 	const remaining = focusTiming.value - Date.now();
 	if (remaining <= 0) {
-		countdownLeft.value = null;
-		clearTimer();
+		endFocus();
 	} else {
 		countdownLeft.value = remaining;
 	}
@@ -56,7 +59,7 @@ function updateCountdown() {
 
 onMounted(async () => {
 	const ft = await getFocusTime();
-	focusTiming.value = ft;
+	focusTiming.value = ft?.blockTime || null;
 	onFocusEnd.value = endFocus;
 });
 
@@ -73,21 +76,22 @@ watch(focusTiming, (time) => {
 		timer = setInterval(updateCountdown, 1000);
 	} else {
 		countdownLeft.value = null;
+		completedFocusTime.value = null;
 	}
 });
 </script>
 
 <template>
-	<div v-if="countdownLeft" class="focus-section">
+	<div v-if="countdownLeft" class="focus-section-running">
 		<m3e-heading style="color: var(--md-sys-color-primary)" variant="display" size="large">{{
-			getTimeTill(countdownLeft)
+			timeToString(countdownLeft)
 		}}</m3e-heading>
 		<m3e-heading variant="title" size="large">of fokus left</m3e-heading>
 		<m3e-button variant="text" @click="focusDialog?.show()">End fokus</m3e-button>
 	</div>
 	<div v-else class="focus-section">
-		<m3e-heading variant="title" size="large">Start Fokus Session</m3e-heading>
-		<m3e-button variant="filled">
+		<TimeFocusedSection></TimeFocusedSection>
+		<m3e-button variant="filled" size="large">
 			<m3e-icon slot="icon" name="schedule"></m3e-icon>
 			<m3e-timepicker-toggle for="focus-timepicker"></m3e-timepicker-toggle>
 			Start fokusing
@@ -102,6 +106,14 @@ watch(focusTiming, (time) => {
 
 <style scoped>
 .focus-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 48px;
+}
+
+.focus-section-running {
 	display: flex;
 	flex-direction: column;
 	align-items: center;

@@ -43,15 +43,12 @@ export const useSettings = defineStore('settings', () => {
 	}
 
 	async function loadSettings() {
-		try {
-			const { whitelistedSites = [], blacklistedSites = [] } = await chrome.storage.local.get(
-				['whitelistedSites', 'blacklistedSites'],
-			);
-			whitelisted.value = whitelistedSites || [];
-			blacklisted.value = blacklistedSites || [];
-		} catch (error) {
-			console.error(error);
-		}
+		const { whitelistedSites = [], blacklistedSites = [] } = await chrome.storage.local.get([
+			'whitelistedSites',
+			'blacklistedSites',
+		]);
+		whitelisted.value = whitelistedSites || [];
+		blacklisted.value = blacklistedSites || [];
 	}
 
 	loadSettings();

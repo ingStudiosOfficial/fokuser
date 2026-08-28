@@ -1,5 +1,6 @@
 import { getBlacklistedSites, getWhitelistedSites } from '@/utils/sites';
-import { getFocusTime, getTimeTill } from '../utils/focus';
+import { getFocusTime } from '../utils/focus';
+import { timeToString } from '@/utils/time';
 
 chrome.runtime.onMessage.addListener((message) => {
 	console.log('Received message:', message);
@@ -90,7 +91,7 @@ async function blockPage(blockTime?: number) {
 <div class="blocked">
 	<h1>^_^</h1>
 	<h1>Let's not sidetrack...</h1>
-	<p>Focus for <span id="block-time">${getTimeTill(timeObject.getTime() - Date.now())}</span> to earn points!</p>
+	<p>Focus for <span id="block-time">${timeToString(timeObject.getTime() - Date.now())}</span> to earn points!</p>
 	<p>Page blocked by Fokuser</p>
 </div>
 
@@ -127,7 +128,7 @@ h1, p {
 
 		setInterval(() => {
 			const bt = document.querySelector('#block-time');
-			if (bt) bt.textContent = getTimeTill(timeObject.getTime() - Date.now());
+			if (bt) bt.textContent = timeToString(timeObject.getTime() - Date.now());
 		}, 1000);
 	} else {
 		blockedHtmlBody = `
@@ -182,7 +183,7 @@ async function checkFocus() {
 	const focusTime = await getFocusTime();
 	console.log('Focus time:', focusTime);
 	if (focusTime) {
-		await blockPage(focusTime);
+		await blockPage(focusTime.blockTime);
 	} else if (await checkSiteBlacklisted()) {
 		await blockPage();
 	}

@@ -1,8 +1,12 @@
+import type { FocusData } from '@/interfaces/FocusData';
+
 export async function setFocusTime(blockTime: number) {
 	console.log('Block time:', blockTime);
 
 	await chrome.alarms.create('focus-alarm', { when: blockTime, persistAcrossSessions: true });
-	await chrome.storage.local.set({ focusTime: blockTime });
+	await chrome.storage.local.set({
+		focusTime: { blockTime: blockTime, startTime: Date.now() } as FocusData,
+	});
 
 	const tabs = await chrome.tabs.query({});
 	for (const tab of tabs) {
@@ -14,7 +18,7 @@ export async function setFocusTime(blockTime: number) {
 	}
 }
 
-export async function getFocusTime(): Promise<number | undefined> {
+export async function getFocusTime(): Promise<FocusData | undefined> {
 	const { focusTime } = await chrome.storage.local.get('focusTime');
 	return focusTime;
 }
@@ -44,19 +48,14 @@ export async function endFocus() {
 	await chrome.storage.local.remove('focusTime');
 }
 
-export function getTimeTill(ms: number): string {
-	if (ms <= 0) return '0 seconds';
+export async function saveTimeFocused(focus: FocusData) {
+	const timeFocused = focus.blockTime - focus.startTime;
+	const existingTimeFocused = await getTimeFocused();
+	const totalFocused = existingTimeFocused + timeFocused;
+	await chrome.storage.local.set({ timeFocused: totalFocused });
+}
 
-	const totalSeconds = Math.floor(ms / 1000);
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = totalSeconds % 60;
-
-	if (hours > 0) {
-		return `${hours}h ${minutes}m ${seconds}s`;
-	} else if (minutes > 0) {
-		return `${minutes}m ${seconds}s`;
-	} else {
-		return `${seconds}s`;
-	}
+export async function getTimeFocused(): Promise<number> {
+	const { timeFocused } = await chrome.storage.local.get('timeFocused');
+	return timeFocused || 0;
 }
