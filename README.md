@@ -6,7 +6,7 @@
 <p align="center">
 A FOSS M3E Chrome Extension <b>site blocker</b> and <b>focus timer</b>.
 </p>
-<p><!--<a href="https://chromewebstore.google.com">Download</a> • --><a href="./LICENSE">License</a></p>
+<p><a href="https://chromewebstore.google.com/detail/elhhadhbamlheipjebfcfkobbdnpclgl">Install</a> • <a href="./LICENSE">License</a></p>
 <hr />
 </div>
 
