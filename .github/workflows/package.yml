@@ -10,6 +10,8 @@ jobs:
     build-extension:
         name: Build Chrome Extension
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         strategy:
             fail-fast: false
         steps:
