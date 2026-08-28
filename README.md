@@ -1,48 +1,83 @@
-# fokuser
+<div align="center">
+<img src="branding/logo.svg" align="center" width="200px" />
 
-This template should help get you started developing with Vue 3 in Vite.
+<h1 align="center">Fokuser</h1>
 
-## Recommended IDE Setup
+<p align="center">
+A FOSS M3E Chrome Extension <b>site blocker</b> and <b>focus timer</b>.
+</p>
+<p><!--<a href="https://chromewebstore.google.com">Download</a> • --><a href="./LICENSE">License</a></p>
+<hr />
+</div>
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Fokuser is a free and open-source Chrome Extension that lets you set a focus timer to block sites to help you focus on your priorities. It features a Material 3 Expressive user interface and tracks the time you have saved by blocking sites. You can whitelist sites that matter to you and blacklist those that distract you the most.
 
-## Recommended Browser Setup
+## Install
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Install Fokuser via the [Releases](https://github.com/ingStudiosOfficial/fokuser/releases/latest) page. Chrome Web Store listing coming soon.
 
-## Type Support for `.vue` Imports in TS
+## Features
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- A Material 3 Expressive UI
+- Uses Manifest v3
+- Free and open-source
+- All data stays on-device
 
-## Customize configuration
+## Gallery
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+![](./branding/webstore/promo1.png)
 
-## Project Setup
+![](./branding/webstore/promo2.png)
 
-```sh
+![](./branding/webstore/promo3.png)
+
+![](./branding/webstore/promo4.png)
+
+![](./branding/webstore/promo5.png)
+
+## Development
+
+Fokuser welcomes **human made** contributions of all kinds. Here are some guidelines to get you started.
+
+1. **No AI code**
+
+All AI generated or AI assisted code will be rejected.
+
+2. **Consistent code formatting**
+
+We use oxfmt to format the codebase. Please make sure you run `npm run format` before you commit.
+
+3. **1 feature per pull request**
+
+Please do not add multiple features for one pull request as it is hard to request changes and we might have to reject all your code.
+
+### Prerequisites
+
+- **Git** - Source control for Fokuser
+- **Node.js** - Used to build the extension
+
+### Building and Running
+
+1. **Install the dependencies**
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+2. **Run the extension in development mode**
 
-```sh
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+3. **Build the extension**
 
-```sh
+```bash
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## License
 
-```sh
-npm run lint
-```
+Fokuser is licensed under the Apache 2.0 License. Check [LICENSE](./LICENSE) for more details.
+
+© 2026 (ing) Studios, Ethan Lee, and Erik Ung
