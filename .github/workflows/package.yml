@@ -21,7 +21,7 @@ jobs:
               with:
                   node-version: 24
 
-            - run: npm run build
+            - run: npm install && npm run build
 
             - name: Compress to zip
               id: packExtensionDir
