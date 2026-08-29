@@ -1,4 +1,4 @@
-import { timeToString } from './time';
+import { timeToString } from '@/utils/time';
 
 let timer: number | null = null;
 

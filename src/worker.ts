@@ -1,5 +1,6 @@
-import { clearFocusBadge, setFocusBadge } from './utils/badge';
-import { endFocus, getFocusTime, saveTimeFocused } from './utils/focus';
+import { clearFocusBadge, setFocusBadge } from '@/utils/badge';
+import { endFocus, getFocusTime, saveTimeFocused } from '@/utils/focus';
+import { enableNotificationsBlocking } from '@/utils/notifications';
 
 chrome.runtime.onInstalled.addListener(async () => {
 	console.log('Service worker active.');
@@ -22,6 +23,10 @@ chrome.runtime.onMessage.addListener(async (message) => {
 		}
 		case 'unblock-focus': {
 			await clearFocusBadge();
+			break;
+		}
+		case 'enable-notif-blocking': {
+			await enableNotificationsBlocking();
 			break;
 		}
 	}

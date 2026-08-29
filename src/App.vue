@@ -3,22 +3,21 @@ import FocusSection from '@/components/FocusSection.vue';
 import EndFocusDialog from '@/components/dialogs/EndFocusDialog.vue';
 import '@m3e/web/icon-button';
 import '@m3e/web/icon';
-import SettingsDialog from './components/dialogs/SettingsDialog.vue';
-import { useDialog } from './composables/dialog.ts';
 
-const { settingsDialog } = useDialog();
+async function openSettings() {
+	await chrome.runtime.openOptionsPage();
+}
 </script>
 
 <template>
 	<div class="popup-root">
-		<m3e-icon-button class="action-button" @click="settingsDialog?.show()">
+		<m3e-icon-button class="action-button" @click="openSettings()">
 			<m3e-icon name="settings"></m3e-icon>
 		</m3e-icon-button>
 		<div class="popup-app">
 			<FocusSection></FocusSection>
 		</div>
 		<EndFocusDialog></EndFocusDialog>
-		<SettingsDialog></SettingsDialog>
 	</div>
 </template>
 
@@ -45,6 +44,7 @@ const { settingsDialog } = useDialog();
 	text-align: center;
 	gap: 32px;
 	padding: 16px 8px;
+	box-sizing: border-box;
 	flex-grow: 1;
 }
 </style>

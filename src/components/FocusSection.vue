@@ -10,7 +10,7 @@ import { getFocusTime, setFocusTime } from '@/utils/focus';
 import { timeToString } from '@/utils/time';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useDialog } from '@/composables/dialog';
-import TimeFocusedSection from './TimeFocusedSection.vue';
+import TimeFocusedSection from '@/components/TimeFocusedSection.vue';
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message === 'unblock-focus') {

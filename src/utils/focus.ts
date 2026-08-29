@@ -1,4 +1,9 @@
 import type { FocusData } from '@/interfaces/FocusData';
+import {
+	blockNotifications,
+	getNotificationsBlockingSetting,
+	unblockNotifications,
+} from './notifications';
 
 export async function setFocusTime(blockTime: number) {
 	console.log('Block time:', blockTime);
@@ -17,6 +22,10 @@ export async function setFocusTime(blockTime: number) {
 		} catch (error) {
 			console.error(error);
 		}
+	}
+
+	if (await getNotificationsBlockingSetting()) {
+		await blockNotifications();
 	}
 }
 
@@ -45,6 +54,8 @@ export async function endFocus() {
 			}
 		}
 	}
+
+	await unblockNotifications();
 
 	await chrome.alarms.clear('focus-alarm');
 	await chrome.storage.local.remove('focusTime');

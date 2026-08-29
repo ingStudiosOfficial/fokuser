@@ -1,5 +1,5 @@
 import { getBlacklistedSites, getWhitelistedSites } from '@/utils/sites';
-import { getFocusTime } from '../utils/focus';
+import { getFocusTime } from '@/utils/focus';
 import { timeToString } from '@/utils/time';
 
 chrome.runtime.onMessage.addListener((message) => {
