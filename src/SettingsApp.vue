@@ -5,8 +5,9 @@ import '@m3e/web/nav-menu';
 import WhitelistBlacklistSettings from './components/settings/WhitelistBlacklistSettings.vue';
 import NotificationsSettings from './components/settings/NotificationsSettings.vue';
 import { ref } from 'vue';
+//import FocusSchedule from './components/settings/FocusSchedule.vue';
 
-const currentSettingsPage = ref<'whitelist' | 'notifications'>('whitelist');
+const currentSettingsPage = ref<'whitelist' | 'notifications' | 'schedule'>('whitelist');
 </script>
 
 <template>
@@ -25,9 +26,16 @@ const currentSettingsPage = ref<'whitelist' | 'notifications'>('whitelist');
 					:selected="currentSettingsPage === 'notifications'"
 					@click="currentSettingsPage = 'notifications'"
 				>
-					<m3e-icon slot="icon" name="notifications"></m3e-icon>
-					<span slot="label">Notifications</span>
+					<m3e-icon slot="icon" name="do_not_disturb_on"></m3e-icon>
+					<span slot="label">Do Not Disturb</span>
 				</m3e-nav-menu-item>
+				<!--<m3e-nav-menu-item
+					:selected="currentSettingsPage === 'schedule'"
+					@click="currentSettingsPage = 'schedule'"
+				>
+					<m3e-icon slot="icon" name="schedule"></m3e-icon>
+					<span slot="label">Fokus schedule</span>
+				</m3e-nav-menu-item>-->
 			</m3e-nav-menu>
 
 			<div class="content">
@@ -37,6 +45,7 @@ const currentSettingsPage = ref<'whitelist' | 'notifications'>('whitelist');
 				<NotificationsSettings
 					v-if="currentSettingsPage === 'notifications'"
 				></NotificationsSettings>
+				<!--<FocusSchedule v-if="currentSettingsPage === 'schedule'"></FocusSchedule>-->
 			</div>
 		</div>
 	</div>

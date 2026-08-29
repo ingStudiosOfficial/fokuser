@@ -23,10 +23,10 @@ async function toggleBlocking(target: M3eSwitchElement) {
 
 <template>
 	<div class="settings-content">
-		<m3e-heading variant="title" size="large">Notifications</m3e-heading>
+		<m3e-heading variant="title" size="large">Do Not Disturb</m3e-heading>
 
 		<div class="switch-setting">
-			<m3e-heading variant="label" size="large">Enable notification blocking</m3e-heading>
+			<m3e-heading variant="label" size="large">Enable Do Not Disturb</m3e-heading>
 			<m3e-switch
 				icons="both"
 				:checked="notificationsBlockingEnabled"
