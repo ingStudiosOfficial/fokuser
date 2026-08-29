@@ -24,7 +24,10 @@ export async function setFocusTime(blockTime: number) {
 		}
 	}
 
-	if (await getNotificationsBlockingSetting()) {
+	const blockNotificationsSettings = await getNotificationsBlockingSetting();
+	console.log('Block notifications settings:', blockNotificationsSettings);
+
+	if (blockNotificationsSettings) {
 		await blockNotifications();
 	}
 }
@@ -55,7 +58,11 @@ export async function endFocus() {
 		}
 	}
 
-	await unblockNotifications();
+	try {
+		await unblockNotifications();
+	} catch (error) {
+		console.error(error);
+	}
 
 	await chrome.alarms.clear('focus-alarm');
 	await chrome.storage.local.remove('focusTime');

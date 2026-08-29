@@ -1,3 +1,6 @@
+import { getWhitelistedSites } from './sites';
+import { createFullUrl } from './url';
+
 export async function checkContentSettingsPermission(): Promise<boolean> {
 	const granted = await chrome.permissions.contains({
 		permissions: ['contentSettings'],
@@ -16,6 +19,8 @@ export async function requestContentSettingsPermission() {
 }
 
 export async function blockNotifications() {
+	console.log('Block notifications called.');
+
 	const granted = await checkContentSettingsPermission();
 
 	if (!granted) {
@@ -26,6 +31,21 @@ export async function blockNotifications() {
 		primaryPattern: '<all_urls>',
 		setting: 'block',
 	});
+
+	const whitelisted = await getWhitelistedSites();
+	for (const site of whitelisted) {
+		try {
+			const hostname = createFullUrl(site);
+			const pattern = `${hostname}/*`;
+			console.log('Pattern:', pattern);
+			await chrome.contentSettings.notifications.set({
+				primaryPattern: pattern,
+				setting: 'allow',
+			});
+		} catch (error) {
+			console.error(error);
+		}
+	}
 }
 
 export async function unblockNotifications() {

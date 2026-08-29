@@ -4,6 +4,7 @@ import {
 	getNotificationsBlockingSetting,
 } from '@/utils/notifications';
 import { setWhitelistedSites, setBlacklistedSites } from '@/utils/sites';
+import { createFullUrl } from '@/utils/url';
 import { defineStore } from 'pinia';
 import { ref, toRaw } from 'vue';
 
@@ -16,7 +17,7 @@ export const useSettings = defineStore('settings', () => {
 		const prefixedSites = sites
 			.filter((s) => s !== '')
 			.map((s) => {
-				const url = /^https?:\/\//i.test(s) ? s : `http://${s}`;
+				const url = createFullUrl(s);
 				return url;
 			});
 		whitelisted.value = prefixedSites;
@@ -25,7 +26,7 @@ export const useSettings = defineStore('settings', () => {
 
 	async function addToWhitelist(site: string) {
 		if (site === '') return;
-		const url = /^https?:\/\//i.test(site) ? site : `http://${site}`;
+		const url = createFullUrl(site);
 		whitelisted.value.push(url);
 		await setWhitelistedSites(toRaw(whitelisted.value));
 	}
@@ -34,7 +35,7 @@ export const useSettings = defineStore('settings', () => {
 		const prefixedSites = sites
 			.filter((s) => s !== '')
 			.map((s) => {
-				const url = /^https?:\/\//i.test(s) ? s : `http://${s}`;
+				const url = createFullUrl(s);
 				return url;
 			});
 		blacklisted.value = prefixedSites;
@@ -43,7 +44,7 @@ export const useSettings = defineStore('settings', () => {
 
 	async function addToBlacklist(site: string) {
 		if (site === '') return;
-		const url = /^https?:\/\//i.test(site) ? site : `http://${site}`;
+		const url = createFullUrl(site);
 		blacklisted.value.push(url);
 		await setBlacklistedSites(toRaw(blacklisted.value));
 	}
