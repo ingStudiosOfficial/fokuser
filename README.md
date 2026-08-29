@@ -20,8 +20,11 @@ Install Fokuser via the [Releases](https://github.com/ingStudiosOfficial/fokuser
 
 - A Material 3 Expressive UI
 - Uses Manifest v3
-- Free and open-source
-- All data stays on-device
+- Free and open-source under the Apache 2.0 License
+- All data stays on-device using ```chrome.storage.local```
+- Clutter-free focus timer
+- Timer badge updates
+- Site whitelist and blacklist
 
 ## Gallery
 
