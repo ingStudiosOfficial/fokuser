@@ -11,6 +11,7 @@ import { timeToString } from '@/utils/time';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useDialog } from '@/composables/dialog';
 import TimeFocusedSection from '@/components/TimeFocusedSection.vue';
+import { showSnackbar } from '@/utils/snackbar';
 
 chrome.runtime.onMessage.addListener((message) => {
 	if (message === 'unblock-focus') {
@@ -43,6 +44,12 @@ function clearTimer() {
 function onTimepickerChange(el: M3eTimepickerElement) {
 	console.log(el.date);
 	const date = el.date?.getTime() || Date.now();
+
+	if (date - Date.now() <= 0) {
+		showSnackbar('Time cannot be before current time');
+		return;
+	}
+
 	focusTiming.value = date;
 	completedFocusTime.value = date - Date.now();
 	setFocusTime(date);

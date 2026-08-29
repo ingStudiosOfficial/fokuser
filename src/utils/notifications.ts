@@ -15,7 +15,7 @@ export async function requestContentSettingsPermission() {
 
 	console.log('Granted:', granted);
 
-	if (!granted) throw new Error('content settings permission not granted');
+	if (!granted) throw new Error('Content settings permission not granted');
 }
 
 export async function blockNotifications() {
@@ -24,7 +24,7 @@ export async function blockNotifications() {
 	const granted = await checkContentSettingsPermission();
 
 	if (!granted) {
-		throw new Error('permission to adjust content settings not granted');
+		throw new Error('Permission to adjust content settings not granted');
 	}
 
 	await chrome.contentSettings.notifications.set({
@@ -52,7 +52,7 @@ export async function unblockNotifications() {
 	const granted = await checkContentSettingsPermission();
 
 	if (!granted) {
-		throw new Error('permission to adjust content settings not granted');
+		throw new Error('Permission to adjust content settings not granted');
 	}
 
 	chrome.contentSettings.notifications.clear({}, () => {});
