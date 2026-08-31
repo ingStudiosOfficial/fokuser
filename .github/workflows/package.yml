@@ -66,12 +66,17 @@ jobs:
                       ### Via the crx file
 
                       1. Download ```extension.crx```
+
                       2. Go to ```chrome://extensions``` and drop ```extension.crx``` in
 
                       ### Via the zip file
 
                       1. Download ```extension.zip```
+
                       2. Extract ```extension.zip```
+
                       3. Turn on developer mode in ```chrome://extensions```
+
                       4. Click 'Load unpacked'
+
                       5. Open the extracted file
