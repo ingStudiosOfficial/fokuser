@@ -11,4 +11,6 @@ body {
 	font-family: 'Google Sans Flex';
 	width: 400px;
 	height: 600px;
+	background-color: var(--md-sys-color-surface);
+	color: var(--md-sys-color-on-surface);
 }

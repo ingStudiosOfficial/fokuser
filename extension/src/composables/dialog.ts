@@ -3,7 +3,8 @@ import { ref } from 'vue';
 
 const focusDialog = ref<M3eDialogElement | null>(null);
 const onFocusEnd = ref<(() => void) | null>(null);
+const scheduleDialog = ref<M3eDialogElement | null>(null);
 
 export function useDialog() {
-	return { focusDialog, onFocusEnd };
+	return { focusDialog, onFocusEnd, scheduleDialog };
 }

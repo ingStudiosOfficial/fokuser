@@ -1,3 +1,4 @@
+import type { ScheduleData } from '@/interfaces/ScheduleData';
 import {
 	disableNotificationsBlocking,
 	enableNotificationsBlocking,
@@ -12,6 +13,14 @@ export const useSettings = defineStore('settings', () => {
 	const whitelisted = ref<string[]>([]);
 	const blacklisted = ref<string[]>([]);
 	const notificationsBlockingEnabled = ref<boolean>(false);
+	const focusSchedule = ref<ScheduleData[]>([
+		{
+			key: window.crypto.randomUUID(),
+			name: 'leethana dih',
+			startTime: Date.now(),
+			endTime: Date.now() + 10000000,
+		},
+	]);
 
 	async function setWhitelisted(sites: string[]) {
 		const prefixedSites = sites
@@ -76,6 +85,7 @@ export const useSettings = defineStore('settings', () => {
 		whitelisted,
 		blacklisted,
 		notificationsBlockingEnabled,
+		focusSchedule,
 		setWhitelisted,
 		addToWhitelist,
 		setBlacklisted,

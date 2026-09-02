@@ -5,14 +5,16 @@ import '@m3e/web/nav-menu';
 import WhitelistBlacklistSettings from './components/settings/WhitelistBlacklistSettings.vue';
 import NotificationsSettings from './components/settings/NotificationsSettings.vue';
 import { ref } from 'vue';
-//import FocusSchedule from './components/settings/FocusSchedule.vue';
+import FocusSchedule from './components/settings/FocusSchedule.vue';
 
 const currentSettingsPage = ref<'whitelist' | 'notifications' | 'schedule'>('whitelist');
 </script>
 
 <template>
 	<div class="settings-wrapper">
-		<m3e-heading variant="display" size="small" style="margin-left: 16px">Settings</m3e-heading>
+		<div class="title-wrapper">
+			<m3e-heading variant="display" size="small">Settings</m3e-heading>
+		</div>
 		<div class="content-wrapper">
 			<m3e-nav-menu class="menu">
 				<m3e-nav-menu-item
@@ -29,13 +31,13 @@ const currentSettingsPage = ref<'whitelist' | 'notifications' | 'schedule'>('whi
 					<m3e-icon slot="icon" name="do_not_disturb_on"></m3e-icon>
 					<span slot="label">Do Not Disturb</span>
 				</m3e-nav-menu-item>
-				<!--<m3e-nav-menu-item
+				<m3e-nav-menu-item
 					:selected="currentSettingsPage === 'schedule'"
 					@click="currentSettingsPage = 'schedule'"
 				>
 					<m3e-icon slot="icon" name="schedule"></m3e-icon>
 					<span slot="label">Fokus schedule</span>
-				</m3e-nav-menu-item>-->
+				</m3e-nav-menu-item>
 			</m3e-nav-menu>
 
 			<div class="content">
@@ -45,7 +47,7 @@ const currentSettingsPage = ref<'whitelist' | 'notifications' | 'schedule'>('whi
 				<NotificationsSettings
 					v-if="currentSettingsPage === 'notifications'"
 				></NotificationsSettings>
-				<!--<FocusSchedule v-if="currentSettingsPage === 'schedule'"></FocusSchedule>-->
+				<FocusSchedule v-if="currentSettingsPage === 'schedule'"></FocusSchedule>
 			</div>
 		</div>
 	</div>
@@ -59,7 +61,16 @@ const currentSettingsPage = ref<'whitelist' | 'notifications' | 'schedule'>('whi
 	box-sizing: border-box;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 16px;
+}
+
+.title-wrapper {
+	width: 50%;
+	text-align: left;
+	box-sizing: border-box;
+	padding: 0 16px;
+	width: clamp(50%, 1200px - 50vw, 100%);
 }
 
 .content-wrapper {
@@ -67,6 +78,7 @@ const currentSettingsPage = ref<'whitelist' | 'notifications' | 'schedule'>('whi
 	flex-direction: row;
 	gap: 16px;
 	flex: 1;
+	width: clamp(50%, 1200px - 50vw, 100%);
 }
 
 .menu {

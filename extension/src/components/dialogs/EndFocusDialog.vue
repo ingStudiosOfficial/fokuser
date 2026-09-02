@@ -45,5 +45,7 @@ onMounted(() => {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
+	margin-top: 8px;
+	box-sizing: border-box;
 }
 </style>
