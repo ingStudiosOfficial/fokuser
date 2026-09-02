@@ -3,5 +3,5 @@ export function createFullUrl(site: string) {
 		site.startsWith('http://') || site.startsWith('https://') ? site : `https://${site}`,
 	);
 	const hostname = url.hostname.replace(/^https?:\/\//, '').replace(/^www\./, '');
-	return `https://www.${hostname}`;
+	return `https://${hostname}`;
 }
