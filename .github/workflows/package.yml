@@ -99,14 +99,12 @@ jobs:
       contents: read
     strategy:
       fail-fast: false
-    defaults:
-      run:
-        working-directory: extension
     steps:
       - name: Download crx artifact
         uses: actions/download-artifact@v4
         with:
           name: extension-crx
+          path: extension
 
       - id: auth
         uses: google-github-actions/auth@v2
@@ -122,14 +120,12 @@ jobs:
           PUBLISHER_ID="${{ secrets.PUBLISHER_ID }}"
           EXTENSION_ID="${{ secrets.EXTENSION_ID }}"
 
-          # Upload media package (uses /upload/v2/...)
           curl -f -H "Authorization: Bearer $ACCESS_TOKEN" \
                -H "x-goog-api-version: 2" \
                -X POST \
-               --data-binary @extension.crx \
+               --data-binary @extension/extension.crx \
                "https://chromewebstore.googleapis.com/upload/v2/publishers/$PUBLISHER_ID/items/$EXTENSION_ID:upload"
                
-          # Submit item for publish (uses /v2/...)
           curl -f -H "Authorization: Bearer $ACCESS_TOKEN" \
                -H "x-goog-api-version: 2" \
                -X POST \
