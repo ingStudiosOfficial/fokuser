@@ -1,6 +1,7 @@
 import { clearFocusBadge, setFocusBadge } from '@/utils/badge';
 import { endFocus, getFocusTime, saveTimeFocused } from '@/utils/focus';
 import { enableNotificationsBlocking } from '@/utils/notifications';
+import { startScheduledFocus } from './utils/schedule';
 
 chrome.runtime.onInstalled.addListener(async () => {
 	console.log('Service worker active.');
@@ -12,6 +13,12 @@ chrome.alarms.onAlarm.addListener(async (alarm) => {
 		await endFocus();
 		if (focusTime) await saveTimeFocused(focusTime);
 		chrome.action.setBadgeText({ text: '' });
+	} else if (alarm.name.startsWith('start-focus-')) {
+		try {
+			await startScheduledFocus(alarm.name.replace('start-focus-', ''));
+		} catch (error) {
+			console.error(error);
+		}
 	}
 });
 

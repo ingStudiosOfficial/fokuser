@@ -12,7 +12,7 @@ import { showSnackbar } from '@/utils/snackbar';
 import { useSettings } from '@/stores/settings';
 import type { ScheduleData } from '@/interfaces/ScheduleData';
 
-const { addScheduleItem } = useSettings();
+const { addScheduleItem, editScheduleItem } = useSettings();
 
 const { scheduleDialogOpen } = useDialog();
 
@@ -21,6 +21,7 @@ const key = ref<string>(window.crypto.randomUUID());
 const sessionName = ref<string>('');
 const startDate = ref<Date>(new Date());
 const endDate = ref<Date>(new Date());
+const isEditing = ref<boolean>(false);
 
 function openDialog(schedule?: ScheduleData) {
 	if (schedule) {
@@ -28,6 +29,7 @@ function openDialog(schedule?: ScheduleData) {
 		sessionName.value = schedule.name;
 		startDate.value = new Date(schedule.startTime);
 		endDate.value = new Date(schedule.endTime);
+		isEditing.value = true;
 	}
 
 	dialog.value?.show();
@@ -47,17 +49,27 @@ async function onSave() {
 		return;
 	}
 
-	await addScheduleItem({
-		key: window.crypto.randomUUID(),
+	startDate.value.setSeconds(0);
+	startDate.value.setSeconds(0);
+
+	const schedule: ScheduleData = {
+		key: key.value,
 		name: sessionName.value,
 		startTime: startDate.value.getTime(),
 		endTime: endDate.value.getTime(),
-	});
+	};
+
+	if (isEditing.value) {
+		await editScheduleItem(schedule);
+	} else {
+		await addScheduleItem(schedule);
+	}
 
 	key.value = window.crypto.randomUUID();
 	sessionName.value = '';
 	startDate.value = new Date();
 	endDate.value = new Date();
+	isEditing.value = false;
 
 	dialog.value?.hide();
 }

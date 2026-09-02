@@ -67,6 +67,15 @@ export const useSettings = defineStore('settings', () => {
 		await setSchedule(toRaw(focusSchedule.value));
 	}
 
+	async function editScheduleItem(item: ScheduleData) {
+		const index = focusSchedule.value.map((i) => i.key).indexOf(item.key);
+		if (index < 0) return;
+
+		focusSchedule.value[index] = item;
+
+		await setSchedule(toRaw(focusSchedule.value));
+	}
+
 	async function deleteScheduleItem(key: string) {
 		focusSchedule.value = focusSchedule.value.filter((s) => s.key !== key);
 		await setSchedule(toRaw(focusSchedule.value));
@@ -98,6 +107,7 @@ export const useSettings = defineStore('settings', () => {
 		addToBlacklist,
 		toggleNotificationsBlocking,
 		addScheduleItem,
+		editScheduleItem,
 		deleteScheduleItem,
 	};
 });
