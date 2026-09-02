@@ -1,4 +1,4 @@
-import type { ScheduleData } from './interfaces/ScheduleData';
+import type { ScheduleData } from '../interfaces/ScheduleData';
 
 export async function setSchedule(schedule: ScheduleData[]) {
 	await chrome.storage.local.set({ schedule: schedule });

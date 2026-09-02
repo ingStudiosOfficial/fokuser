@@ -1,5 +1,5 @@
 import type { ScheduleData } from '@/interfaces/ScheduleData';
-import { getSchedule, setSchedule } from '@/schedule';
+import { getSchedule, setSchedule } from '@/utils/schedule';
 import {
 	disableNotificationsBlocking,
 	enableNotificationsBlocking,
@@ -67,6 +67,11 @@ export const useSettings = defineStore('settings', () => {
 		await setSchedule(toRaw(focusSchedule.value));
 	}
 
+	async function deleteScheduleItem(key: string) {
+		focusSchedule.value = focusSchedule.value.filter((s) => s.key !== key);
+		await setSchedule(toRaw(focusSchedule.value));
+	}
+
 	async function loadSettings() {
 		const { whitelistedSites = [], blacklistedSites = [] } = await chrome.storage.local.get([
 			'whitelistedSites',
@@ -93,5 +98,6 @@ export const useSettings = defineStore('settings', () => {
 		addToBlacklist,
 		toggleNotificationsBlocking,
 		addScheduleItem,
+		deleteScheduleItem,
 	};
 });

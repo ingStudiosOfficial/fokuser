@@ -6,11 +6,13 @@ import '@m3e/web/button';
 import '@m3e/web/icon';
 import '@m3e/web/list';
 import '@m3e/web/card';
+import '@m3e/web/icon-button';
 import { storeToRefs } from 'pinia';
 import ScheduleDialog from '../dialogs/ScheduleDialog.vue';
 import { useDialog } from '@/composables/dialog';
 
 const settingsStore = useSettings();
+const { deleteScheduleItem } = settingsStore;
 
 const { focusSchedule } = storeToRefs(settingsStore);
 
@@ -46,6 +48,10 @@ const { scheduleDialogOpen } = useDialog();
 							new Date(session.endTime).toLocaleTimeString([], { timeStyle: 'short' })
 						}}</span
 					>
+
+					<m3e-icon-button slot="trailing" @click.stop="deleteScheduleItem(session.key)">
+						<m3e-icon name="delete"></m3e-icon>
+					</m3e-icon-button>
 				</m3e-list-action>
 			</m3e-action-list>
 		</m3e-card>
