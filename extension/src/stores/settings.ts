@@ -1,4 +1,5 @@
 import type { ScheduleData } from '@/interfaces/ScheduleData';
+import { getSchedule, setSchedule } from '@/schedule';
 import {
 	disableNotificationsBlocking,
 	enableNotificationsBlocking,
@@ -13,14 +14,7 @@ export const useSettings = defineStore('settings', () => {
 	const whitelisted = ref<string[]>([]);
 	const blacklisted = ref<string[]>([]);
 	const notificationsBlockingEnabled = ref<boolean>(false);
-	const focusSchedule = ref<ScheduleData[]>([
-		{
-			key: window.crypto.randomUUID(),
-			name: 'leethana dih',
-			startTime: Date.now(),
-			endTime: Date.now() + 10000000,
-		},
-	]);
+	const focusSchedule = ref<ScheduleData[]>([]);
 
 	async function setWhitelisted(sites: string[]) {
 		const prefixedSites = sites
@@ -68,6 +62,11 @@ export const useSettings = defineStore('settings', () => {
 		}
 	}
 
+	async function addScheduleItem(item: ScheduleData) {
+		focusSchedule.value.push(item);
+		await setSchedule(toRaw(focusSchedule.value));
+	}
+
 	async function loadSettings() {
 		const { whitelistedSites = [], blacklistedSites = [] } = await chrome.storage.local.get([
 			'whitelistedSites',
@@ -77,6 +76,8 @@ export const useSettings = defineStore('settings', () => {
 		blacklisted.value = blacklistedSites || [];
 
 		notificationsBlockingEnabled.value = await getNotificationsBlockingSetting();
+
+		focusSchedule.value = await getSchedule();
 	}
 
 	loadSettings();
@@ -91,5 +92,6 @@ export const useSettings = defineStore('settings', () => {
 		setBlacklisted,
 		addToBlacklist,
 		toggleNotificationsBlocking,
+		addScheduleItem,
 	};
 });

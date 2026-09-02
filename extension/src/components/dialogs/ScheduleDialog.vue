@@ -9,15 +9,31 @@ import '@m3e/web/icon-button';
 import '@m3e/web/date-input';
 import '@m3e/web/icon';
 import { showSnackbar } from '@/utils/snackbar';
+import { useSettings } from '@/stores/settings';
+import type { ScheduleData } from '@/interfaces/ScheduleData';
 
-const { scheduleDialog } = useDialog();
+const { addScheduleItem } = useSettings();
+
+const { scheduleDialogOpen } = useDialog();
 
 const dialog = useTemplateRef<M3eDialogElement>('dialog');
+const key = ref<string>(window.crypto.randomUUID());
 const sessionName = ref<string>('');
 const startDate = ref<Date>(new Date());
 const endDate = ref<Date>(new Date());
 
-function onSave() {
+function openDialog(schedule?: ScheduleData) {
+	if (schedule) {
+		key.value = schedule.key;
+		sessionName.value = schedule.name;
+		startDate.value = new Date(schedule.startTime);
+		endDate.value = new Date(schedule.endTime);
+	}
+
+	dialog.value?.show();
+}
+
+async function onSave() {
 	console.log('Session name:', sessionName.value);
 	console.log('Dates:', startDate.value, endDate.value);
 
@@ -31,11 +47,23 @@ function onSave() {
 		return;
 	}
 
+	await addScheduleItem({
+		key: window.crypto.randomUUID(),
+		name: sessionName.value,
+		startTime: startDate.value.getTime(),
+		endTime: endDate.value.getTime(),
+	});
+
+	key.value = window.crypto.randomUUID();
+	sessionName.value = '';
+	startDate.value = new Date();
+	endDate.value = new Date();
+
 	dialog.value?.hide();
 }
 
 onMounted(() => {
-	scheduleDialog.value = dialog.value;
+	scheduleDialogOpen.value = openDialog;
 });
 </script>
 
@@ -84,8 +112,8 @@ onMounted(() => {
 
 		<div slot="actions" end>
 			<m3e-button variant="text">
-				<m3e-icon slot="icon" name="save"></m3e-icon>
-				<m3e-dialog-action>Cancel</m3e-dialog-action>
+				<m3e-icon slot="icon" name="close"></m3e-icon>
+				<m3e-dialog-action>Close</m3e-dialog-action>
 			</m3e-button>
 			<m3e-button variant="filled" @click="onSave()">
 				<m3e-icon slot="icon" name="save"></m3e-icon>

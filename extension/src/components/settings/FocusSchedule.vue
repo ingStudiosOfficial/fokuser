@@ -14,21 +14,25 @@ const settingsStore = useSettings();
 
 const { focusSchedule } = storeToRefs(settingsStore);
 
-const { scheduleDialog } = useDialog();
+const { scheduleDialogOpen } = useDialog();
 </script>
 
 <template>
 	<div class="settings-content">
 		<m3e-heading variant="title" size="large">Fokus schedule</m3e-heading>
 
-		<m3e-button variant="filled" @click="scheduleDialog?.show()">
+		<m3e-button variant="filled" @click="scheduleDialogOpen?.()">
 			<m3e-icon slot="icon" name="add"></m3e-icon>
 			Add schedule rule
 		</m3e-button>
 
 		<m3e-card class="schedules">
 			<m3e-action-list variant="segmented">
-				<m3e-list-action v-for="session in focusSchedule" :key="session.key">
+				<m3e-list-action
+					v-for="session in focusSchedule"
+					:key="session.key"
+					@click="scheduleDialogOpen?.(session)"
+				>
 					<m3e-icon slot="leading" name="schedule"></m3e-icon>
 					{{ session.name }}
 					<span slot="supporting-text"
