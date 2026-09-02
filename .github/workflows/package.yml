@@ -83,3 +83,54 @@ jobs:
             4. Click 'Load unpacked'
 
             5. Open the extracted file
+
+      - name: Upload crx artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-crx
+          path: build/extension.crx
+
+  publish-extension:
+    name: Publish Chrome Extension
+    runs-on: ubuntu-latest
+    needs: build-extension
+    permissions:
+      id-token: write
+      contents: read
+    strategy:
+      fail-fast: false
+    defaults:
+      run:
+        working-directory: extension
+    steps:
+      - name: Download crx artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: extension-crx
+
+      - id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: "projects/${{ secrets.PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+          service_account: "${{ secrets.SERVICE_ACCOUNT }}"
+          token_format: "access_token"
+          access_token_scopes: "https://www.googleapis.com/auth/chromewebstore"
+
+      - name: Upload and publish to Chrome Web Store
+        run: |
+          ACCESS_TOKEN="${{ steps.auth.outputs.access_token }}"
+          PUBLISHER_ID="${{ secrets.PUBLISHER_ID }}"
+          EXTENSION_ID="${{ secrets.EXTENSION_ID }}"
+
+          # Upload media package (uses /upload/v2/...)
+          curl -f -H "Authorization: Bearer $ACCESS_TOKEN" \
+               -H "x-goog-api-version: 2" \
+               -X POST \
+               --data-binary @extension.crx \
+               "https://chromewebstore.googleapis.com/upload/v2/publishers/$PUBLISHER_ID/items/$EXTENSION_ID:upload"
+               
+          # Submit item for publish (uses /v2/...)
+          curl -f -H "Authorization: Bearer $ACCESS_TOKEN" \
+               -H "x-goog-api-version: 2" \
+               -X POST \
+               "https://chromewebstore.googleapis.com/v2/publishers/$PUBLISHER_ID/items/$EXTENSION_ID:publish"
