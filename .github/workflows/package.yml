@@ -84,11 +84,11 @@ jobs:
 
             5. Open the extracted file
 
-      - name: Upload crx artifact
+      - name: Upload zip artifact
         uses: actions/upload-artifact@v4
         with:
-          name: extension-crx
-          path: extension/build/extension.crx
+          name: extension-zip
+          path: extension/build/extension.zip
 
   publish-extension:
     name: Publish Chrome Extension
@@ -100,10 +100,10 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - name: Download crx artifact
+      - name: Download zip artifact
         uses: actions/download-artifact@v4
         with:
-          name: extension-crx
+          name: extension-zip
           path: extension
 
       - id: auth
@@ -123,7 +123,7 @@ jobs:
           curl -f -H "Authorization: Bearer $ACCESS_TOKEN" \
                -H "x-goog-api-version: 2" \
                -X POST \
-               --data-binary @extension/extension.crx \
+               --data-binary @extension/extension.zip \
                "https://chromewebstore.googleapis.com/upload/v2/publishers/$PUBLISHER_ID/items/$EXTENSION_ID:upload"
                
           curl -f -H "Authorization: Bearer $ACCESS_TOKEN" \
