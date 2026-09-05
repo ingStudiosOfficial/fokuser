@@ -12,10 +12,15 @@ import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useDialog } from '@/composables/dialog';
 import TimeFocusedSection from '@/components/TimeFocusedSection.vue';
 import { showSnackbar } from '@/utils/snackbar';
+import { useTimeFocused } from '@/stores/timeFocused';
 
-chrome.runtime.onMessage.addListener((message) => {
+const { refresh } = useTimeFocused();
+
+chrome.runtime.onMessage.addListener(async (message) => {
 	if (message === 'unblock-focus') {
 		endFocus();
+	} else if (message === 'refresh-time-focused') {
+		await refresh();
 	}
 });
 

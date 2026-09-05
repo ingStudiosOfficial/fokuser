@@ -77,6 +77,7 @@ export async function saveTimeFocused(focus: FocusData) {
 	const existingTimeFocused = await getTimeFocused();
 	const totalFocused = existingTimeFocused + timeFocused;
 	await chrome.storage.local.set({ timeFocused: totalFocused });
+	await chrome.runtime.sendMessage('refresh-time-focused');
 }
 
 export async function getTimeFocused(): Promise<number> {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useSettings } from '@/stores/settings';
 import { storeToRefs } from 'pinia';
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch, type Ref } from 'vue';
 import '@m3e/web/heading';
 import '@m3e/web/form-field';
 import '@m3e/web/textarea-autosize';
@@ -26,14 +26,18 @@ async function parseBlacklisted(target: HTMLTextAreaElement) {
 	await setBlacklisted(sites);
 }
 
+function parseSiteList(sites: string[], siteText: Ref<string, string>) {
+	console.log('Sites:', sites);
+	if (sites && sites.length !== 0) {
+		console.log('Setting whitelisted sites text value.');
+		siteText.value = sites.filter((s) => s !== '').join('\n');
+	}
+}
+
 watch(
 	whitelisted,
 	(sites) => {
-		console.log('Sites:', sites);
-		if (sites && sites.length !== 0) {
-			console.log('Setting whitelisted sites text value.');
-			whitelistedSitesText.value = sites.filter((s) => s !== '').join('\n');
-		}
+		parseSiteList(sites, whitelistedSitesText);
 	},
 	{ deep: true },
 );
@@ -41,14 +45,15 @@ watch(
 watch(
 	blacklisted,
 	(sites) => {
-		console.log('Sites:', sites);
-		if (sites && sites.length !== 0) {
-			console.log('Setting blacklisted sites text value.');
-			blacklistedSitesText.value = sites.filter((s) => s !== '').join('\n');
-		}
+		parseSiteList(sites, blacklistedSitesText);
 	},
 	{ deep: true },
 );
+
+onMounted(() => {
+	parseSiteList(whitelisted.value, whitelistedSitesText);
+	parseSiteList(blacklisted.value, blacklistedSitesText);
+});
 </script>
 
 <template>

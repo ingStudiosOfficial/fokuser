@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { getTimeFocused } from '@/utils/focus';
+import { useTimeFocused } from '@/stores/timeFocused';
 import { timeToString } from '@/utils/time';
 import '@m3e/web/heading';
-import { onMounted, ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
 
-const timeFocused = ref<number>(0);
+const timeFocusedStore = useTimeFocused();
+const { refresh } = timeFocusedStore;
+
+const { timeFocused } = storeToRefs(timeFocusedStore);
 
 onMounted(async () => {
-	timeFocused.value = await getTimeFocused();
+	await refresh();
 });
 </script>
 
