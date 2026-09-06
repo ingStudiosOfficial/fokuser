@@ -2,11 +2,13 @@ import { getBlacklistedSites, getWhitelistedSites } from '@/utils/sites';
 import { getFocusTime } from '@/utils/focus';
 import { timeToString } from '@/utils/time';
 
-chrome.runtime.onMessage.addListener((message) => {
+chrome.runtime.onMessage.addListener(async (message) => {
 	console.log('Received message:', message);
 
 	if (message === 'unblock-focus') {
-		window.location.reload();
+		if (!(await checkSiteWhitelisted())) {
+			window.location.reload();
+		}
 	} else if (message === 'block-focus') {
 		checkFocus();
 	}
