@@ -5,7 +5,7 @@ useSeoMeta({
     "Install Foksuer, a FOSS M3E Chrome Extension Site Blocker and Focus Timer. Noew available on the Chrome Web Store. Fokuser is built by (ing) Studios.",
   ogType: "website",
   ogUrl: "https://fokuser.ingstudios.dev",
-  ogTitle: "Turtlebrowse - A FOSS M3E Chrome Extension Site Blocker and Focus Timer",
+  ogTitle: "Fokuser - A FOSS M3E Chrome Extension Site Blocker and Focus Timer",
   ogDescription:
     "Fokuser is a free and open-source Chrome Extension that lets you set a focus timer to block sites to help you focus on your priorities.",
   ogImage: "https://fokuser.ingstudios.dev/logo.png",
