@@ -6,7 +6,7 @@
 <p align="center">
 A FOSS M3E Chrome Extension <b>site blocker</b> and <b>focus timer</b>.
 </p>
-<p><a href="https://chromewebstore.google.com/detail/elhhadhbamlheipjebfcfkobbdnpclgl">Install</a> • <a href="./LICENSE">License</a></p>
+<p><a href="https://fokuser.ingstudios.dev">Website</a> • <a href="https://chromewebstore.google.com/detail/elhhadhbamlheipjebfcfkobbdnpclgl">Install</a> • <a href="./LICENSE">License</a></p>
 <hr />
 </div>
 
@@ -21,7 +21,7 @@ Install Fokuser via the [Releases](https://github.com/ingStudiosOfficial/fokuser
 - A Material 3 Expressive UI
 - Uses Manifest v3
 - Free and open-source under the Apache 2.0 License
-- All data stays on-device using ```chrome.storage.local```
+- All data stays on-device using `chrome.storage.local`
 - Clutter-free focus timer
 - Timer badge updates
 - Site whitelist and blacklist
