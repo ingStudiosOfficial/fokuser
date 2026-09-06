@@ -1,4 +1,8 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+function openCWS() {
+  window.open("https://chromewebstore.google.com/detail/fokuser/elhhadhbamlheipjebfcfkobbdnpclgl");
+}
+</script>
 
 <template>
   <div class="oss-section-wrapper">
@@ -44,7 +48,7 @@
         <span class="feat-label">Block notifications</span>
       </m3e-list-item>
     </m3e-list>
-    <m3e-button variant="filled" size="medium" @click="navigateTo('/download')">
+    <m3e-button variant="filled" size="medium" @click="openCWS()">
       <Icon slot="icon" name="mdi:google-chrome" />
       Install from the Chrome Web Store
     </m3e-button>

@@ -2,6 +2,10 @@
 function openGithub() {
   window.open("https://github.com/ingStudiosOfficial/fokuser", "_blank");
 }
+
+function openCWS() {
+  window.open("https://chromewebstore.google.com/detail/fokuser/elhhadhbamlheipjebfcfkobbdnpclgl");
+}
 </script>
 
 <template>
@@ -10,7 +14,7 @@ function openGithub() {
     <div class="hero-title-container">
       <h1 class="hero-title">Focus made <span class="browser-feat">easy</span></h1>
     </div>
-    <m3e-button variant="filled" size="medium" @click="navigateTo('/download')">
+    <m3e-button variant="filled" size="medium" @click="openCWS()">
       <Icon slot="icon" name="mdi:google-chrome" />
       Install from the Chrome Web Store
     </m3e-button>
