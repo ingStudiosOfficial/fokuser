@@ -19,6 +19,9 @@ const { refresh } = useTimeFocused();
 chrome.runtime.onMessage.addListener(async (message) => {
 	if (message === 'unblock-focus') {
 		endFocus();
+	} else if (message === 'block-focus') {
+		const ft = await getFocusTime();
+		focusTiming.value = ft?.blockTime || null;
 	} else if (message === 'refresh-time-focused') {
 		await refresh();
 	}
@@ -110,7 +113,7 @@ watch(focusTiming, async (time) => {
 		<m3e-circular-progress-indicator
 			:value="((completedFocusTime - countdownLeft) / completedFocusTime) * 100"
 			variant="flat"
-			style="--m3e-circular-flat-progress-indicator-diameter: 50vw"
+			style="--m3e-circular-flat-progress-indicator-diameter: 60vh"
 		>
 			<div class="timer-content">
 				<m3e-heading
