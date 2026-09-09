@@ -14,7 +14,7 @@ Fokuser is a free and open-source Chrome Extension that lets you set a focus tim
 
 ## Install
 
-Install Fokuser via the [Releases](https://github.com/ingStudiosOfficial/fokuser/releases/latest) page. Chrome Web Store listing coming soon.
+Install Fokuser via the [Chrome Web Store](https://chromewebstore.google.com/detail/elhhadhbamlheipjebfcfkobbdnpclgl) or via the [Releases](https://github.com/ingStudiosOfficial/fokuser/releases/latest) page.
 
 ## Features
 
@@ -25,6 +25,7 @@ Install Fokuser via the [Releases](https://github.com/ingStudiosOfficial/fokuser
 - Clutter-free focus timer
 - Timer badge updates
 - Site whitelist and blacklist
+- Fullscreen mode to be in complete focus
 
 ## Gallery
 
@@ -48,7 +49,7 @@ All AI generated or AI assisted code will be rejected.
 
 2. **Consistent code formatting**
 
-We use oxfmt to format the codebase. Please make sure you run `npm run format` before you commit.
+We use oxfmt to format the codebase in the `extension/` directory. Please make sure you run `npm run format` before you commit.
 
 3. **1 feature per pull request**
 
@@ -60,6 +61,8 @@ Please do not add multiple features for one pull request as it is hard to reques
 - **Node.js** - Used to build the extension
 
 ### Building and Running
+
+#### Extension
 
 1. **Install the dependencies**
 
@@ -74,6 +77,26 @@ npm run dev
 ```
 
 3. **Build the extension**
+
+```bash
+npm run build
+```
+
+#### Website
+
+1. **Install the dependencies**
+
+```bash
+npm install
+```
+
+2. **Run the website in development mode**
+
+```bash
+npm run dev
+```
+
+3. **Build the website**
 
 ```bash
 npm run build
