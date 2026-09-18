@@ -29,7 +29,7 @@ const { scheduleDialogOpen } = useDialog();
 		</m3e-button>
 
 		<m3e-card class="schedules">
-			<m3e-action-list variant="segmented">
+			<m3e-action-list slot="content" variant="segmented">
 				<m3e-list-action
 					v-for="session in focusSchedule"
 					:key="session.key"
